@@ -9,51 +9,72 @@ package employeehierarchy;
  *
  * @author Matthew Tse
  */
-public class CommissionEmployee extends Employee {
+public class CommissionEmployee extends Employee 
+{
+   private double grossSales; // gross weekly sales
+   private double commissionRate; // commission percentage
 
-    private double grossSales;// gross weekly sales
-    private double commissionRate;// commission percentage
-    
-    public CommissionEmployee(String first, String last, 
-            String ssn, double sales, double rate ){
-        super(first, last, ssn);
-        setGrossSales(sales); //we have to perform data validation
-        setCommissionRate(rate);//we have to perform data validation
-    }
-    
-        
-    public double getGrossSales(){
-        return grossSales;
-    }
-    
-    public void setGrossSales(double sales){
-        if (sales>=0.0)//data validation
-            grossSales = sales;
-        else
-            throw new IllegalArgumentException("Gross sales must be greater than 0.0");
-    }
-    
-    public double getCommissionRate(){
-        return commissionRate;
-    }
-    
-    public void setCommissionRate(double rate){
-        if ((rate>=0.2)&&(rate<1.0))
-            commissionRate = rate;
-        else
-            throw new IllegalArgumentException("Commission rate must in >=0.0 and <1.0");
-    }
-    
-    public double earning(){
-        return commissionRate*grossSales;
-    }
-    
-    
-    public String toString(){
-        return String.format("%s\n"
-                + "Gross Sales: %.2f \n"
-                + "Commission Rate: %.2f", super.toString(), 
-                grossSales, commissionRate);
-    }
-    
-}
+   // constructor
+   public CommissionEmployee(String firstName, String lastName, 
+      String socialSecurityNumber, double grossSales, 
+      double commissionRate)
+   {
+      super(firstName, lastName, socialSecurityNumber);
+
+      if (commissionRate <= 0.0 || commissionRate >= 1.0) // validate 
+         throw new IllegalArgumentException(
+            "Commission rate must be > 0.0 and < 1.0");
+
+      if (grossSales < 0.0) // validate
+         throw new IllegalArgumentException("Gross sales must be >= 0.0");
+
+      this.grossSales = grossSales;
+      this.commissionRate = commissionRate;
+   } 
+
+   // set gross sales amount
+   public void setGrossSales(double grossSales)
+   {
+      if (grossSales < 0.0) // validate
+         throw new IllegalArgumentException("Gross sales must be >= 0.0");
+
+      this.grossSales = grossSales;
+   } 
+
+   // return gross sales amount
+   public double getGrossSales()
+   {
+      return grossSales;
+   } 
+
+   // set commission rate
+   public void setCommissionRate(double commissionRate)
+   {
+      if (commissionRate <= 0.0 || commissionRate >= 1.0) // validate
+         throw new IllegalArgumentException(
+            "Commission rate must be > 0.0 and < 1.0");
+
+      this.commissionRate = commissionRate;
+   } 
+
+   // return commission rate
+   public double getCommissionRate()
+   {
+      return commissionRate;
+   } 
+                                        
+
+   // return String representation of CommissionEmployee object
+   @Override                                                   
+   public String toString()                                    
+   {                                                           
+      return String.format("%s: %s%n%s: $%,.2f; %s: %.2f",    
+         "commission employee", super.toString(),              
+         "gross sales", getGrossSales(),                       
+         "commission rate", getCommissionRate());             
+   }
+
+public double getPaymentAmount() {
+	return getCommissionRate() * getGrossSales();  
+} 
+} // end class CommissionEmployee

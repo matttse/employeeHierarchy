@@ -9,52 +9,47 @@ package employeehierarchy;
  *
  * @author Matthew Tse
  */
-public abstract class Employee {
-       
-    private String firstName;
-    private String lastName;
-    private String Ssn;
+public abstract class Employee implements Payable
+{
+   private final String firstName;
+   private final String lastName;
+   private final String socialSecurityNumber;
 
-    
-    public Employee(String first, String last , String ssn){
-        firstName = first;
-        lastName = last;
-        Ssn = ssn;
+   // constructor
+   public Employee(String firstName, String lastName, 
+      String socialSecurityNumber)
+   {
+      this.firstName = firstName;
+      this.lastName = lastName;
+      this.socialSecurityNumber = socialSecurityNumber;
+   } 
 
-    }
-    
-    public String getFirstName(){
-        return firstName;
-    }
-    
-    public void setFirstName(String firstName){
-        this.firstName = firstName;
-    }
-    
-    public String getLastName(){
-        return lastName;
-    }
-    
-    public void setLastName(String last){
-        lastName=last;
-    }
-    
-    public String getSsn(){
-        return Ssn;
-    }
-    
-    public void setSsn (String ssn){
-        Ssn=ssn;
-    }
-    
-    
-    
-    public abstract double earning();
-    
-    
-    public String toString(){
-        return String.format("commission employee: %s %s\n"
-                + "social security number: %s \n", firstName, 
-                lastName, Ssn);
-    }
-}
+   // return first name
+   public String getFirstName()
+   {
+      return firstName;
+   } 
+
+   // return last name
+   public String getLastName()
+   {
+      return lastName;
+   } 
+
+   // return social security number
+   public String getSocialSecurityNumber()
+   {
+      return socialSecurityNumber;
+   } 
+
+   // return String representation of Employee object
+   @Override
+   public String toString()
+   {
+      return String.format("%s %s%nsocial security number: %s", 
+         getFirstName(), getLastName(), getSocialSecurityNumber());
+   }
+
+   // Note: We do not implement Payable method getPaymentAmount here so 
+   // this class must be declared abstract to avoid a compilation error.
+} // end abstract class Employee
